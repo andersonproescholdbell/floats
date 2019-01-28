@@ -8,9 +8,8 @@ export default {
       outputFloat: ''
     };
   },
-  created: function() {
+  mounted: function() {
     this.inputFloat = 0.0123456789;
-    document.getElementById('ieeeInput').select();
   },
   watch: {
     inputFloat: function(value) {
