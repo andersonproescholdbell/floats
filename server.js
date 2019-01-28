@@ -47,7 +47,9 @@ if (password == undefined) {
 var acquired = Number(String(fs.readFileSync('acquired.txt')).replace(/\s/g,''));
 function lastAcquired(time) {
   fs.writeFile('acquired.txt', time, (err) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+    }
   });
 }
 
@@ -56,7 +58,7 @@ var priceDataJSON = null;
 function getPriceData() {
   request.get('https://api.hexa.one/prices/730?key=dev', (error, response, body) => {
     if (error) {
-      throw error;
+      console.log(error);
       return null;
     }else {
       console.log('Got priceData');
@@ -66,7 +68,9 @@ function getPriceData() {
       priceData = JSON.parse(body).data;
       priceDataJSON = priceData;
       fs.writeFile( (__dirname + '/server/priceData.json'), JSON.stringify(priceData), (err) => {
-        if (err) throw err;
+        if (err) {
+          console.log(err);
+        }
       });
     }
   });
