@@ -14,10 +14,8 @@ export default {
   methods: {
     go: function() {
       socket.emit('login', String(this.password).replace(/ /g,''));
-    }
-  },
-  mounted: function() {
-    socket.on('passCheck', (pass) => {
+    },
+    onLoggin: function(pass) {
       this.$store.commit('setSignIn', pass);
       if (pass) {
         try {
@@ -26,10 +24,25 @@ export default {
         }catch {
           this.$router.push('/home');
         }
-        socket.emit('getData', 'please');
+        localStorage.setItem('loggedIn', (new Date()).getTime());
+        socket.emit('loggedIn');
       }else {
         alert('Wrong password.');
       }
+    }
+  },
+  mounted: function() {
+    //opened site
+    var lastLoggedIn = Number(localStorage.getItem('loggedIn'));
+    //console.log(lastLoggedIn);
+    //console.log('now: ' + (new Date()).getTime());
+    if (((new Date()).getTime()-lastLoggedIn) < (1800*1000)) {
+      this.onLoggin(true);
+    }
+
+    //on loggin
+    socket.on('passCheck', (pass) => {
+      this.onLoggin(pass);
     });
 
     this.$store.commit('setItemData', require('./util/json/itemData.json'));

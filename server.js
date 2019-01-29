@@ -6,6 +6,7 @@ const request = require('request');
 const express = require('express');
 const app = express();
 const serv = require('http').Server(app);
+var io = require('socket.io')(serv, {});
 
 app.use(history({
   index: '/',
@@ -44,7 +45,6 @@ if (password == undefined) {
   password = String(fs.readFileSync('password.txt')).replace(/\s/g,'');
 }
 
-var acquired = Number(String(fs.readFileSync('acquired.txt')).replace(/\s/g,''));
 function lastAcquired(time) {
   fs.writeFile('acquired.txt', time, (err) => {
     if (err) {
@@ -77,8 +77,9 @@ function getPriceData() {
 }
 
 //need to get priceData again or not
+var acquired = Number(String(fs.readFileSync('acquired.txt')).replace(/\s/g,''));
 var now = (new Date()).getTime();
-if ( now - acquired > 30000) {
+if ( (now - acquired) > (30000*1000)) {
   console.log("It's been over 30,000 seconds! Reacquiring priceData...");
   getPriceData();
 }else {
@@ -92,10 +93,18 @@ setInterval(function() {
 }, (30000*1000));
 
 //------------------------------------------------------------------------------
-var io = require('socket.io')(serv, {});
 io.on('connection', function(socket) {
   //assign id on connection
   SOCKET_LIST[socket.id] = socket;
+  socket.on('loggedIn', function() {
+    //logged in
+
+    //sending them data
+    var waitForData = setInterval(function() {
+      socket.emit('priceData', priceDataJSON);
+      clearInterval(waitForData);
+    }, (10*1000));
+  });
   console.log(socket.id + ' connected.');
   //delete socket.id on disconnect
   socket.on('disconnect', function () {
@@ -131,14 +140,6 @@ io.on('connection', function(socket) {
     socket.emit('JSONres', data);
   });
   //------------------------------------------------
-  socket.on('getData', function(data) {
-    if (priceDataJSON == null) {
-
-    }else {
-      socket.emit('priceData', priceDataJSON);
-    }
-  });
-
   //when priceDataJSON changes --> send to all logged in
   setInterval(function() {
     if (oldPriceDataJSON != priceDataJSON) {

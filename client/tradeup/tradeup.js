@@ -98,8 +98,8 @@ export default {
       }
     },
     //remove skin
-    removeSkin: function(item) {
-      console.log(item);
+    removeSkin: function(index) {
+      this.addedSkins.splice(index, 1);
     },
     //clear added floats and outcomes
     resetAll: function() {

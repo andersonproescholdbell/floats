@@ -19,11 +19,7 @@ vue.use(vuex);
 vue.use(vueRouter);
 
 /*
-can't delete tradeup floats
-can click hidden and disabled buttons
-make sure server getting priceData every 50000 works
-don't have to login after refreshing for a limited time
-don't have to login when redirected to /nopage
+can click hidden and disabled buttons? maybe not
 */
 
 new vue({

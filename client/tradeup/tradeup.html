@@ -16,8 +16,8 @@
     </div>
 
     <ul id="addedSkinsList">
-      <li class="flex" v-for="item in addedSkins">
-        <button :class="['flex', item.rarity, 'margin']" @click="removeSkin(item)">-</button>
+      <li class="flex" v-for="(item, index) in addedSkins">
+        <button :class="['flex', item.rarity, 'margin']" @click="removeSkin(index)">-</button>
         <span :class="['flex', item.rarity, 'margin']">{{item.skin}}</span>
         <input class="floats" :placeholder="item.floatPlaceholder" v-model="item.float"/>
       </li>
