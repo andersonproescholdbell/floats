@@ -142,11 +142,11 @@ io.on('connection', function(socket) {
   //when priceDataJSON changes --> send to all logged in
   setInterval(function() {
     if (oldPriceDataJSON != priceDataJSON) {
-      for (var key in LOGGED_IN) {
-        io.to(key).emit('priceData', priceData);
+      if (socket.id in LOGGED_IN) {
+        socket.emit('priceData', priceData);
       }
       oldPriceDataJSON = priceDataJSON;
     }
-  }, 5000);
+  }, (300*1000));
 
 });
