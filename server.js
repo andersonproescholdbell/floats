@@ -29,7 +29,7 @@ app.get('/main.js', function(req, res) {
 
 const port = process.env.PORT || 2000;
 serv.listen(port);
-console.log('\nServer started on port 2000.');
+console.log('\nServer started on port ' + port + '.');
 var start = (new Date()).getTime();
 //-------------------------------------------------
 
@@ -83,7 +83,7 @@ if ( (now - acquired) > (30000*1000)) {
   console.log("It's been over 30,000 seconds! Reacquiring priceData...");
   getPriceData();
 }else {
-  priceDataJSON = require(__dirname + '/server/priceData.json').data;
+  priceDataJSON = require(__dirname + '/server/priceData.json');
   console.log('No need for new data yet, got data from local file.');
 }
 
@@ -97,13 +97,14 @@ io.on('connection', function(socket) {
   //assign id on connection
   SOCKET_LIST[socket.id] = socket;
   socket.on('loggedIn', function() {
-    //logged in
-
     //sending them data
     var waitForData = setInterval(function() {
-      socket.emit('priceData', priceDataJSON);
-      clearInterval(waitForData);
-    }, (10*1000));
+      if (priceDataJSON != null) {
+        console.log('sending data');
+        socket.emit('priceData', priceDataJSON);
+        clearInterval(waitForData);
+      }
+    }, 1000);
   });
   console.log(socket.id + ' connected.');
   //delete socket.id on disconnect

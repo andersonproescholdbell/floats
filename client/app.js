@@ -48,6 +48,7 @@ export default {
     this.$store.commit('setItemData', require('./util/json/itemData.json'));
 
     socket.on('priceData', (priceData) => {
+      console.log('got priceData');
       this.$store.commit('setPriceData', priceData);
     });
   }

@@ -306,8 +306,14 @@ export default {
     //set data
     this.itemData = this.$store.state.itemData;
     this.addSkins();
-    this.priceData = this.$store.state.priceData;
     this.rarityRankings = this.$store.state.rarityRankings;
+    var waitForData = setInterval(() => {
+      if (Object.keys(this.$store.state.priceData).length > 0) {
+        console.log('set price data');
+        this.priceData = this.$store.state.priceData;
+        clearInterval(waitForData);
+      }
+    }, (1000));
 
     //correct skinslist scrolling
     document.getElementById('searchList').style.height = (window.innerHeight-75) + 'px';
