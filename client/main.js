@@ -7,6 +7,7 @@ import { mapState } from 'vuex'
 import appVue from './app.vue';
 import homeVue from './home/home.vue';
 import combinationsVue from './combinations/combinations.vue';
+import simplecombVue from './simplecomb/simplecomb.vue';
 import helpVue from './help/help.vue';
 import ieeeVue from './ieee/ieee.vue';
 import tradeupVue from './tradeup/tradeup.vue';
@@ -37,6 +38,10 @@ new vue({
       {
         path: '/combinations',
         component: combinationsVue
+      },
+      {
+        path: '/simplecomb',
+        component: simplecombVue
       },
       {
         path: '/help',
