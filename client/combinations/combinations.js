@@ -129,7 +129,7 @@ export default {
           this.userFloat = '';
         }else if (Number(this.userFloat) > skin.maxWear) {
           alert('The max float for ' + skin.name + ' is ' + skin.maxWear);
-          this.floatPlaceholder = skin.minWear + '-' + skin.maxWear + ' or inspect link';
+          this.floatPlaceholder = skin.minWear + '-' + skin.maxWear;
         }else if (Number(this.userFloat) < skin.minWear) {
           alert('The min float for ' + skin.name + ' is ' + skin.minWear);
           this.floatPlaceholder = skin.minWear + '-' + skin.maxWear + ' or inspect link';
