@@ -126,7 +126,7 @@ export default {
         var skinName = skinNamesAndFloats[i].name + ' ' + util.determineWear(skinNamesAndFloats[i].float);
         if (!used.includes(skinName)) {
           used.push(skinName);
-          skinsData[skinName] = this.priceData[skinName]['7']['avg'];
+          skinsData[skinName] = util.getPrice(this.priceData, skinName);
         }
       }
       //getting prices of all possible outcomes
@@ -136,10 +136,9 @@ export default {
           used.push(newOutcomes[i]);
           for (var j = 0; j < rarities.length; j++) {
             var skinName = newOutcomes[i] + ' ' + rarities[j];
-            try {
-              skinsData[skinName] = this.priceData[skinName]['7']['avg'];
-            }catch {
-              //skin doesn't exist in a condition
+            var tempPrice = util.getPrice(this.priceData, skinName);
+            if (tempPrice !== undefined) {
+              skinsData[skinName] = tempPrice;
             }
           }
         }

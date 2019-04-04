@@ -56,9 +56,7 @@ function lastAcquired(time) {
 var oldPriceDataJSON = null;
 var priceDataJSON = null;
 function getPriceData() {
-  /*const link = 'https://api.hexa.one/prices/730?key=dev';*/
-  const link = 'http://csgobackpack.net/api/GetItemsList/v2/';
-  request.get(link, (error, response, body) => {
+  request.get('http://csgobackpack.net/api/GetItemsList/v2/', (error, response, body) => {
     if (error) {
       console.log(error);
       return null;
@@ -67,7 +65,7 @@ function getPriceData() {
       //marking last time acquired
       lastAcquired(String((new Date()).getTime()));
       //caching
-      priceData = JSON.parse(body).data;
+      priceData = JSON.parse(body)['items_list'];
       priceDataJSON = priceData;
       fs.writeFile( (__dirname + '/server/priceData.json'), JSON.stringify(priceData), (err) => {
         if (err) {
@@ -85,8 +83,13 @@ if ( (now - acquired) > (30000*1000)) {
   console.log("It's been over 30,000 seconds! Reacquiring priceData...");
   getPriceData();
 }else {
-  priceDataJSON = require(__dirname + '/server/priceData.json');
-  console.log('No need for new data yet, got data from local file.');
+  try {
+    priceDataJSON = require(__dirname + '/server/priceData.json');
+    console.log('No need for new data yet, got data from local file.');
+  }catch(err) {
+    console.log("An error occured, regathering priceData.");
+    getPriceData();
+  }
 }
 
 setInterval(function() {

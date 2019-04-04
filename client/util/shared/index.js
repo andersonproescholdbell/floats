@@ -6,6 +6,23 @@ export function findSkin(name, itemData) {
   }
 }
 
+export function getPrice(priceData, skin) {
+  try {
+    return priceData[skin].price['7_days'].average;
+  }catch {
+    try {
+      return priceData[skin].price['30_days'].average;
+    }catch {
+      try {
+        return priceData[skin].price['all_time'].average;
+      }catch {
+        return undefined;
+      }
+    }
+  }
+
+}
+
 export function findMaterials(skinCase, skinRarity, itemData, rarityRankings) {
   var materials = [];
   for (var i = 0; i < itemData.length; i++) {
