@@ -56,7 +56,9 @@ function lastAcquired(time) {
 var oldPriceDataJSON = null;
 var priceDataJSON = null;
 function getPriceData() {
-  request.get('https://api.hexa.one/prices/730?key=dev', (error, response, body) => {
+  /*const link = 'https://api.hexa.one/prices/730?key=dev';*/
+  const link = 'http://csgobackpack.net/api/GetItemsList/v2/';
+  request.get(link, (error, response, body) => {
     if (error) {
       console.log(error);
       return null;
