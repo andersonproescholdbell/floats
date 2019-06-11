@@ -40,11 +40,6 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-var password = process.env.PASSWORD;
-if (password == undefined) {
-  password = String(fs.readFileSync('password.txt')).replace(/\s/g,'');
-}
-
 function lastAcquired(time) {
   fs.writeFile('acquired.txt', time, (err) => {
     if (err) {

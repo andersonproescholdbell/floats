@@ -5,7 +5,7 @@ vue.use(vuex)
 
 export default new vuex.Store({
   state: {
-    signedIn: false,
+    signedIn: true,
     itemData: [],
     priceData: {},
     rarityRankings: {'Consumer': 1, 'Industrial': 2, 'Mil-Spec': 3, 'Restricted': 4, 'Classified': 5, 'Covert': 6}

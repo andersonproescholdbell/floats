@@ -2,7 +2,7 @@
   <div class="column">
     <h1 class="margin0">Enter Floats</h1>
     <div v-for="skin in skins">
-      <input @change="calculate" placeholder="input a float" v-model="skin.float"/>
+      <input @keydown="calculate" @keyup="calculate" placeholder="input a float" v-model="skin.float"/>
     </div>
   </div>
 
@@ -10,7 +10,7 @@
     <div>
       <div v-for="item in info">
         <h3 class="margin0">{{ item.ph }}</h3>
-        <input @change="calculate" v-model="item.entered"/>
+        <input @keydown="calculate" @keyup="calculate" v-model="item.entered"/>
       </div>
     </div>
   </div>
