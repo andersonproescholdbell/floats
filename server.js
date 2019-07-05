@@ -1,3 +1,5 @@
+//use: npm run build
+
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const history = require('connect-history-api-fallback');
 const fs = require('fs');
