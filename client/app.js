@@ -36,9 +36,9 @@ export default {
     var lastLoggedIn = Number(localStorage.getItem('loggedIn'));
     //console.log(lastLoggedIn);
     //console.log('now: ' + (new Date()).getTime());
-    if (((new Date()).getTime()-lastLoggedIn) < (1800*1000)) {
+    /*if (((new Date()).getTime()-lastLoggedIn) < (1800*1000)) {
       this.onLoggin(true);
-    }
+    }*/
 
     //on loggin
     socket.on('passCheck', (pass) => {
